@@ -10,8 +10,6 @@ const secondsValue = document.querySelector('[data-seconds]');
 let countdownInterval;
 
 const datetimePicker = flatpickr('#datetime-picker', options);
-const selectedDate = datetimePicker.selectedDates[0];
-const currentDate = new Date();
 
 const options = {
   enableTime: true,
@@ -20,6 +18,7 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     const selectedDate = selectedDates[0];
+    const currentDate = new Date();
 
     if (selectedDate <= currentDate) {
       window.alert('Please choose a date in the future');
