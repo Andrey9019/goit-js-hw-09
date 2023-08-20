@@ -33,13 +33,13 @@ const options = {
 startBtn.addEventListener('click', handlerStart);
 
 function handlerStart() {
-  // const selectedDate = datetimePicker.selectedDates[0];
-  // const currentDate = new Date();
+  const selectedDate = datetimePicker.selectedDates[0];
+  const currentDate = new Date();
 
-  // if (selectedDate <= currentDate) {
-  //   window.alert('Please choose a date in the future');
-  //   return;
-  // }
+  if (selectedDate <= currentDate) {
+    window.alert('Please choose a date in the future');
+    return;
+  }
 
   if (countdownInterval) return;
 
@@ -48,8 +48,8 @@ function handlerStart() {
 }
 
 function updateTimer() {
-  // const selectedDate = datetimePicker.selectedDates[0];
-  // const currentDate = new Date();
+  const selectedDate = datetimePicker.selectedDates[0];
+  const currentDate = new Date();
   const timeDifference = selectedDate - currentDate;
 
   if (timeDifference <= 0) {
