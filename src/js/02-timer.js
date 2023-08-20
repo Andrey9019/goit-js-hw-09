@@ -1,6 +1,18 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
+const startBtn = document.querySelector(`button[data-start]`);
+const daysValue = document.querySelector('[data-days]');
+const hoursValue = document.querySelector('[data-hours]');
+const minutesValue = document.querySelector('[data-minutes]');
+const secondsValue = document.querySelector('[data-seconds]');
+
+let countdownInterval;
+
+const datetimePicker = flatpickr('#datetime-picker', options);
+const selectedDate = datetimePicker.selectedDates[0];
+const currentDate = new Date();
+
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -8,7 +20,6 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     const selectedDate = selectedDates[0];
-    const currentDate = new Date();
 
     if (selectedDate <= currentDate) {
       window.alert('Please choose a date in the future');
@@ -19,26 +30,16 @@ const options = {
   },
 };
 
-const datetimePicker = flatpickr('#datetime-picker', options);
-
-const startBtn = document.querySelector(`button[data-start]`);
-const daysValue = document.querySelector('[data-days]');
-const hoursValue = document.querySelector('[data-hours]');
-const minutesValue = document.querySelector('[data-minutes]');
-const secondsValue = document.querySelector('[data-seconds]');
-
-let countdownInterval;
-
 startBtn.addEventListener('click', handlerStart);
 
 function handlerStart() {
-  const selectedDate = datetimePicker.selectedDates[0];
-  const currentDate = new Date();
+  // const selectedDate = datetimePicker.selectedDates[0];
+  // const currentDate = new Date();
 
-  if (selectedDate <= currentDate) {
-    window.alert('Please choose a date in the future');
-    return;
-  }
+  // if (selectedDate <= currentDate) {
+  //   window.alert('Please choose a date in the future');
+  //   return;
+  // }
 
   if (countdownInterval) return;
 
@@ -47,8 +48,8 @@ function handlerStart() {
 }
 
 function updateTimer() {
-  const selectedDate = datetimePicker.selectedDates[0];
-  const currentDate = new Date();
+  // const selectedDate = datetimePicker.selectedDates[0];
+  // const currentDate = new Date();
   const timeDifference = selectedDate - currentDate;
 
   if (timeDifference <= 0) {
@@ -64,10 +65,10 @@ function updateTimer() {
 }
 
 function updateTimerDisplay(time) {
-  daysValue.textContent = addLeadingZero(time.days);
-  hoursValue.textContent = addLeadingZero(time.hours);
-  minutesValue.textContent = addLeadingZero(time.minutes);
-  secondsValue.textContent = addLeadingZero(time.seconds);
+  daysValue.textContent = defaultTime(time.days);
+  hoursValue.textContent = defaultTime(time.hours);
+  minutesValue.textContent = defaultTime(time.minutes);
+  secondsValue.textContent = defaultTime(time.seconds);
 }
 
 function convertMs(ms) {
@@ -84,6 +85,6 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-function addLeadingZero(value) {
+function defaultTime(value) {
   return String(value).padStart(2, '0');
 }
