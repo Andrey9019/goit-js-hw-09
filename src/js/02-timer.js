@@ -1,6 +1,14 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
+const startBtn = document.querySelector(`button[data-start]`);
+const daysValue = document.querySelector('[data-days]');
+const hoursValue = document.querySelector('[data-hours]');
+const minutesValue = document.querySelector('[data-minutes]');
+const secondsValue = document.querySelector('[data-seconds]');
+
+let countdownInterval;
+
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -18,16 +26,7 @@ const options = {
     }
   },
 };
-
 const datetimePicker = flatpickr('#datetime-picker', options);
-
-const startBtn = document.querySelector(`button[data-start]`);
-const daysValue = document.querySelector('[data-days]');
-const hoursValue = document.querySelector('[data-hours]');
-const minutesValue = document.querySelector('[data-minutes]');
-const secondsValue = document.querySelector('[data-seconds]');
-
-let countdownInterval;
 
 startBtn.addEventListener('click', handlerStart);
 
@@ -54,16 +53,16 @@ function updateTimer() {
   if (timeDifference <= 0) {
     clearInterval(countdownInterval);
     countdownInterval = null;
-    updateTimer(0);
+    updateTimerDisplay(0);
     startBtn.disabled = false;
     return;
   }
 
   const time = convertMs(timeDifference);
-  updateTimer(time);
+  updateTimerDisplay(time);
 }
 
-function updateTimer(time) {
+function updateTimerDisplay(time) {
   daysValue.textContent = defaultTime(time.days);
   hoursValue.textContent = defaultTime(time.hours);
   minutesValue.textContent = defaultTime(time.minutes);
