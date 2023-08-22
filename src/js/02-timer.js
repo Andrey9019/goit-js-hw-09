@@ -21,7 +21,6 @@ const options = {
 
     if (selectedDate <= currentDate) {
       Notiflix.Notify.warning('Please choose a date in the future');
-
       startBtn.disabled = true;
     } else {
       startBtn.disabled = false;
@@ -44,7 +43,9 @@ function handlerStart() {
   if (countdownInterval) return;
 
   countdownInterval = setInterval(updateTimer, 1000);
+
   startBtn.disabled = true;
+  datetimePicker.input.disabled = true;
 }
 
 function updateTimer() {
@@ -54,13 +55,20 @@ function updateTimer() {
 
   if (timeDifference <= 0) {
     clearInterval(countdownInterval);
-    countdownInterval = null;
-    updateTimerDisplay(0);
     startBtn.disabled = false;
+    datetimePicker.input.disabled = false;
+    countdownInterval = null;
+    updateTimerDisplay({
+      days: `00`,
+      hours: `00`,
+      minutes: `00`,
+      seconds: `00`,
+    });
     return;
   }
 
   const time = convertMs(timeDifference);
+
   updateTimerDisplay(time);
 }
 
